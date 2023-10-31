@@ -13,17 +13,25 @@ app.get("/", (req, res) => {
   res.sendFile("index.html");
 });
 
-// Custom namespace
+// Rooms
+let roomno = 1;
+let maxuser = 0;
 
-const cnsp = io.of("/custom-namespace");
-
-cnsp.on("connection", (user) => {
+io.on("connection", (user) => {
   console.log("New User Connected ID:", user.id);
 
-  cnsp.emit(
-    "new connection",
-    "this is some message from server on custom namespace"
-  );
+  // creating channel or room
+  maxuser++;
+  user.join(`room ${roomno}`);
+  // firing an event inside the room
+  io.sockets
+    .in(`room ${roomno}`)
+    .emit("new connection", `You are connected to room no ${roomno}`);
+
+  if (maxuser >= 2) {
+    maxuser = 0;
+    roomno++;
+  }
 
   user.on("disconnect", () => {
     console.log("User Disconnected ID:", user.id);

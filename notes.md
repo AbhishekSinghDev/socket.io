@@ -49,3 +49,20 @@
     ## "/"
     ## Defining custom namespace
         const cnsp = io.of("/custom-namespace");
+
+# Rooms
+
+    ## What is Rooms
+        => We can create multiple channels inside our namespace according to us those channel known as rooms.
+
+    ## Why we use rooms
+        => App like whatsapp their groupchat feature there the room comes in. also we can limit number of users.
+
+    ## Creating rooms
+        // creating channel or room
+        maxuser++;
+        user.join(`room ${roomno}`);
+        // firing an event inside the room
+        io.sockets
+            .in(`room ${roomno}`)
+            .emit("new connection", `You are connected to room no ${roomno}`);

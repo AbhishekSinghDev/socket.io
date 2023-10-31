@@ -10,7 +10,7 @@
   </body>
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    const socket = io("/custom-namespace");
+    const socket = io();
     socket.on("new connection", (data) => {
       document.body.innerHTML = "";
       document.write(data);
