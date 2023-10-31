@@ -13,23 +13,30 @@ app.get("/", (req, res) => {
   res.sendFile("index.html");
 });
 
+let users = 0;
+
 io.on("connection", (user) => {
   console.log("New User Connected ID:", user.id);
+  users++;
 
-  setTimeout(() => {
-    user.emit("new message", { message: "hey how are you doin!" });
-  }, 3000);
+  user.emit("newuserconnect", { message: "Hi, Welcome to stream bro!" });
 
-  user.on("message from client to server", (data) => {
-    console.log(data.message);
+  // Broadcasting
+  // io.sockets.emit("broadcast", { message: `${users} users connected` });
+
+  // this broadcast be only shown to those people who are already connected right now.
+  user.broadcast.emit("newuserconnect", {
+    message: `${users} users connected`,
   });
-
-  // setTimeout(() => {
-  //   user.send("Sent through in-built event: message");
-  // }, 3000);
 
   user.on("disconnect", () => {
     console.log("User Disconnected ID:", user.id);
+
+    users--;
+    // io.sockets.emit("broadcast", { message: `${users} users connected` });
+    user.broadcast.emit("newuserconnnect", {
+      message: `${users} users connected`,
+    });
   });
 });
 

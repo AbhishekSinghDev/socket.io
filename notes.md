@@ -27,3 +27,19 @@
                 })
 
         => 2. create event on client side and catch it on server side.
+
+# Global broadcast
+
+    ## io.sockets.emit()
+        server.js
+        io.sockets.emit("broadcast", {});
+
+        index.html
+        socket.on("broadcast", () => {});
+
+# Broadcast within already connected users
+
+    ## socket.broadcast.emit()
+        user.broadcast.emit("newuserconnect", {
+            message: `${users} users connected`,
+        });
