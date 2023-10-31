@@ -10,15 +10,10 @@
   </body>
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    const socket = io();
-    // socket.on("broadcast", (data) => {
-    //   document.body.innerHTML = "";
-    //   document.write(data.message);
-    // });
-
-    socket.on("newuserconnect", (data) => {
+    const socket = io("/custom-namespace");
+    socket.on("new connection", (data) => {
       document.body.innerHTML = "";
-      document.write(data.message);
+      document.write(data);
     });
   </script>
 </html>

@@ -13,30 +13,20 @@ app.get("/", (req, res) => {
   res.sendFile("index.html");
 });
 
-let users = 0;
+// Custom namespace
 
-io.on("connection", (user) => {
+const cnsp = io.of("/custom-namespace");
+
+cnsp.on("connection", (user) => {
   console.log("New User Connected ID:", user.id);
-  users++;
 
-  user.emit("newuserconnect", { message: "Hi, Welcome to stream bro!" });
-
-  // Broadcasting
-  // io.sockets.emit("broadcast", { message: `${users} users connected` });
-
-  // this broadcast be only shown to those people who are already connected right now.
-  user.broadcast.emit("newuserconnect", {
-    message: `${users} users connected`,
-  });
+  cnsp.emit(
+    "new connection",
+    "this is some message from server on custom namespace"
+  );
 
   user.on("disconnect", () => {
     console.log("User Disconnected ID:", user.id);
-
-    users--;
-    // io.sockets.emit("broadcast", { message: `${users} users connected` });
-    user.broadcast.emit("newuserconnnect", {
-      message: `${users} users connected`,
-    });
   });
 });
 

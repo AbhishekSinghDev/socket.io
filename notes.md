@@ -43,3 +43,9 @@
         user.broadcast.emit("newuserconnect", {
             message: `${users} users connected`,
         });
+
+# Defualt namespace
+
+    ## "/"
+    ## Defining custom namespace
+        const cnsp = io.of("/custom-namespace");
