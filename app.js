@@ -16,6 +16,18 @@ app.get("/", (req, res) => {
 io.on("connection", (user) => {
   console.log("New User Connected ID:", user.id);
 
+  setTimeout(() => {
+    user.emit("new message", { message: "hey how are you doin!" });
+  }, 3000);
+
+  user.on("message from client to server", (data) => {
+    console.log(data.message);
+  });
+
+  // setTimeout(() => {
+  //   user.send("Sent through in-built event: message");
+  // }, 3000);
+
   user.on("disconnect", () => {
     console.log("User Disconnected ID:", user.id);
   });

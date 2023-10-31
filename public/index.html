@@ -11,5 +11,19 @@
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io();
+
+    // custom event
+    socket.on("new message", (data) => {
+      document.write(data.message);
+    });
+
+    socket.emit("message from client to server", {
+      message: "message from client to server",
+    });
+
+    // JSON can also be sent
+    socket.on("message", (data) => {
+      document.write(data);
+    });
   </script>
 </html>
